@@ -1,8 +1,8 @@
 class AminoAcidLL{
-  char aminoAcid;
-  String[] codons;
-  int[] counts;
-  AminoAcidLL next;
+  private char aminoAcid;
+  private String[] codons;
+  private int [] counts;
+  private AminoAcidLL next;
 
   AminoAcidLL(){
 
@@ -14,6 +14,7 @@ class AminoAcidLL{
    * pair and increments the codon counter for that codon.
    * NOTE: Does not check for repeats!! */
   AminoAcidLL(String inCodon){
+
   
   }
 
