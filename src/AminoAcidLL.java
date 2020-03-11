@@ -8,16 +8,21 @@ class AminoAcidLL{
 
   }
 
+  public static void main (String [] args){
+
+  }
 
   /********************************************************************************************/
   /* Creates a new node, with a given amino acid/codon 
    * pair and increments the codon counter for that codon.
    * NOTE: Does not check for repeats!! */
   AminoAcidLL(String inCodon){
-
+    aminoAcid = AminoAcidResources.getAminoAcidFromCodon(inCodon);
+    codons = AminoAcidResources.getCodonListForAminoAcid(aminoAcid);
+    counts = incrementCodons(inCodon);
+    next = null;
   
   }
-
   /********************************************************************************************/
   /* Recursive method that increments the count for a specific codon:
    * If it should be at this node, increments it and stops, 
@@ -25,14 +30,38 @@ class AminoAcidLL{
    * If there is no next node, add a new node to the list that would contain the codon. 
    */
   private void addCodon(String inCodon){
-  
+    if(aminoAcid == AminoAcidResources.getAminoAcidFromCodon(inCodon)){
+      incrementCodons(inCodon);
+    }
+    else{
+      if(next != null){
+        next.addCodon(inCodon);
+      }
+      else{
+        next = new AminoAcidLL(inCodon);
+      }
+    }
+  }
+
+  // helper method to increment counts of codon
+  public int[] incrementCodons(String inCodon){
+    for(int i = 0; i < codons.length; i++){
+      if(inCodon == codons[i]){
+        counts[i]++;
+      }
+    }
+    return counts;
   }
 
 
   /********************************************************************************************/
   /* Shortcut to find the total number of instances of this amino acid */
   private int totalCount(){
-    return 0;
+    int sum = 0;
+    for(int i = 0; i < counts.length; i++){
+      sum += counts[i];
+    }
+    return sum;
   }
 
   /********************************************************************************************/
@@ -41,7 +70,6 @@ class AminoAcidLL{
   private int totalDiff(AminoAcidLL inList){
     return Math.abs(totalCount() - inList.totalCount());
   }
-
 
   /********************************************************************************************/
   /* helper method for finding the list difference on two matching nodes
@@ -72,6 +100,9 @@ class AminoAcidLL{
   /********************************************************************************************/
   /* Recursively returns the total list of amino acids in the order that they are in in the linked list. */
   public char[] aminoAcidList(){
+    if(next == null){
+
+    }
     return new char[]{};
   }
 
@@ -92,6 +123,7 @@ class AminoAcidLL{
   /********************************************************************************************/
   /* Static method for generating a linked list from an RNA sequence */
   public static AminoAcidLL createFromRNASequence(String inSequence){
+
     return null;
   }
 
