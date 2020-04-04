@@ -103,7 +103,7 @@ class AminoAcidLL {
         }
 
         //if the first list reaches its end, while the other one does not
-        // takes the total count of inList and adds/recursively calls codonCompare
+        // takes the total count of inList and adds/recursively calls aminoAcidCompare
         if (next == null) {
             return inList.totalCount() + aminoAcidCompare(inList);
         }
@@ -135,19 +135,32 @@ class AminoAcidLL {
         if (inList.next == null && next == null) {
             return totalDiff(inList);
         }
-        // if first list reaches its
+        //if the first list reaches its end, while the other one does not
+        // takes the total count of inList and adds/recursively calls codonCompare
         if (next == null) {
             return inList.totalCount() + codonCompare(inList);
         }
+
+        // if inList reaches its end
+        // takes the total count of the original list
+        // and adds it to the comparison(int) between the original list and inList
         if (inList.next == null) {
             return totalCount() + next.codonCompare(inList);
         }
+        // if the aminoAcid ASCII value is less than the aminoAcid value of inList
+        // gets the total count and adds it to the comparison of the original list of the inList
         if(aminoAcid < inList.aminoAcid){
             return totalCount() + next.codonCompare(inList);
         }
+        // if the aminoAcid ASCII value is greater than the aminoAcid value of inList
+        // gets the total count of inList and adds recursively calls codonCompare
+        // with the next position in the list (iterates through Linked List
         if(aminoAcid > inList.aminoAcid){
             return inList.totalCount() + codonCompare(inList.next);
         }
+        // if neither end reaches its end adds the totalDif of counts with
+        // the comparison between the original list and the next position in inList
+        // (iterates through the rest if the list)
         return codonDiff(inList) + next.codonCompare(inList.next);
     }
 
